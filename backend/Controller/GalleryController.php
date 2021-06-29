@@ -17,7 +17,12 @@ class GalleryController extends ApiController
             unset($files[1]);
             $images = [];
             foreach ($files as $file) {
-                $images[] = '/Gallery/' . $file;
+                $pos = stripos($file, "origin");
+
+
+                if ($pos === false) {
+                    $images[] = '/Gallery/' . $file;
+                }
             }
 
             return $this->successResponse("Images", $images);
@@ -41,7 +46,11 @@ class GalleryController extends ApiController
             }
 
             $image = $request->input('image');
-            move_uploaded_file($image['tmp_name'], BASE_PATH . "/Gallery/" . time() . ".png");
+            $filePath = BASE_PATH . "/Gallery/" . time() . ".png";
+            move_uploaded_file($image['tmp_name'],  $filePath);
+            $imageData = file_get_contents($filePath);
+            file_put_contents(BASE_PATH . "/Gallery/" . time() . "_origin.png", $imageData);
+
             return $this->successResponse("File uploaded successfully");
         } catch (\Exception $e) {
             return $this->errorResponse(500, "Something went wrong");
@@ -62,7 +71,7 @@ class GalleryController extends ApiController
             $img = str_replace(' ', '+', $img);
             $data = base64_decode($img);
             $file = BASE_PATH . "/Gallery/" . $request->input('fileName');
-            $success = file_put_contents($file, $data);
+            file_put_contents($file, $data);
             return $this->successResponse("Image saved successfully", ["image" => $img]);
         } catch (\Exception $e) {
             return $this->errorResponse(500, "Something went wrong");
