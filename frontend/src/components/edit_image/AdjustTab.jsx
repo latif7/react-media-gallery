@@ -50,10 +50,10 @@ export default function AdjustTab({ onChange, filter }) {
         </div>
         <div className="col-6">
           <InputRange
-            label="Sharpen"
-            value={filter.sharpen}
+            label="Vibrance"
+            value={filter.vibrance}
             onChange={onChange}
-            name="sharpen"
+            name="vibrance"
             step="1"
             min="0"
             max="100"
@@ -67,15 +67,7 @@ export default function AdjustTab({ onChange, filter }) {
             min="-100"
             max="100"
           />
-          <InputRange
-            label="Gamma"
-            onChange={onChange}
-            value={filter.gamma}
-            name="gamma"
-            step="1"
-            min="0"
-            max="100"
-          />
+
           <InputRange
             label="Noise"
             onChange={onChange}

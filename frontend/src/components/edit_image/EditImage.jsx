@@ -34,8 +34,7 @@ export default class EditImage extends Component {
         highlight: 0,
         saturation: 0,
         hue: 0,
-        gamma: 0,
-        sharpen: 0,
+        vibrance: 0,
         noise: 0,
       },
     };
@@ -205,9 +204,10 @@ export default class EditImage extends Component {
 
   updateCanvasFilters = () => {
     let filters = this.state.adjustFilter;
+    console.log(filters);
 
     let canvas = document.getElementById("myCanvas");
-    this.canvasRender();
+    this.canvasRender(canvas);
     window.Caman("#myCanvas", function () {
       this.replaceCanvas(canvas);
       this.contrast(filters.contrast)
@@ -215,9 +215,8 @@ export default class EditImage extends Component {
         .brightness(filters.highlight)
         .exposure(filters.exposure)
         .hue(filters.hue)
-        .sharpen(filters.sharpen)
+        .vibrance(filters.vibrance)
         .noise(filters.noise)
-        .gamma(filters.gamma)
         .render();
     });
   };
